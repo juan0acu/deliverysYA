@@ -1,21 +1,20 @@
 package com.example.deliverysya.ui.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.deliverysya.R
 import com.example.deliverysya.presentation.navigation.AppScreen
+import com.example.deliverysya.ui.componets.titleText
 import kotlinx.coroutines.delay
 
 @Composable
@@ -31,12 +30,13 @@ fun splashScreen(navController: NavController) {
 
 @Composable
 fun splash() {
-    Column(horizontalAlignment = Alignment.CenterHorizontally
-        , modifier = Modifier.padding(16.dp)) {
-        Image(painter = painterResource(id = R.drawable.logo_deliverysya),
-            contentDescription ="Logo" , modifier = Modifier.size(400.dp,400.dp))
+    Column(modifier = Modifier.padding(top = 130.dp).fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+        Image(painter = painterResource(id = R.drawable.dise_logo),
+            contentDescription ="Logo" )
+        titleText("DeliverysYA")
     }
-    Text("Splash")
 }
 
 @Preview(showBackground = true)
