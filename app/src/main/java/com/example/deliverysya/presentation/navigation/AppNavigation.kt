@@ -19,6 +19,6 @@ fun appNavigation() {
        }
         composable(AppScreen.LoginScreen.route){
           loginScreen(navController)
-        }git add README.md
+        }
     }
 }
