@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import com.example.deliverysya.presentation.navigation.AppNavigation
+import com.example.deliverysya.presentation.navigation.DeliverysYaNavigation
 import com.example.uicomponents.theme.DeliverysYaTheme
 
 
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                   AppNavigation()
+                   DeliverysYaNavigation()
                 }
             }
         }

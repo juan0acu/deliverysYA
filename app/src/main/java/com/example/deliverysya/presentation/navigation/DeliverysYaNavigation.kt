@@ -9,7 +9,7 @@ import com.example.deliverysya.ui.screens.SplashScreen
 
 
 @Composable
-fun AppNavigation() {
+fun DeliverysYaNavigation() {
 
     val navController = rememberNavController()
     NavHost(
