@@ -1,46 +1,68 @@
 package com.example.deliverysya.ui.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.deliverysya.R
 import com.example.deliverysya.presentation.navigation.AppScreen
-import com.example.deliverysya.ui.componets.TitleText
+import com.example.uicomponents.TitleText
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavController) {
-
-    LaunchedEffect(key1 = true){
+fun SplashScreen(modifier: Modifier = Modifier, navController: NavController) {
+Column() {
+    LaunchedEffect(key1 = true) {
         delay(3000)
         navController.popBackStack()
         navController.navigate(AppScreen.LoginScreen.route)
     }
-    Splash()
+    SplashScreenInitialApp(
+        modifier = modifier
+    )
+}
+
 }
 
 @Composable
-fun Splash() {
-    Column(modifier = Modifier.padding(top = 130.dp).fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-        Image(painter = painterResource(id = R.drawable.dise_logo),
-            contentDescription ="Logo" )
-        TitleText("DeliverysYA")
+fun SplashScreenInitialApp(modifier: Modifier) {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+            .fillMaxSize()
+
+    ) {
+        Box(modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight(), contentAlignment = Alignment.Center) {
+            Image(
+                painter = painterResource(id = R.drawable.dise_logo_500dp),
+                contentDescription = stringResource(id = R.string.logo_name),
+                modifier = modifier
+                    .height(dimensionResource(id = R.dimen.dc_padding_100))
+                    .width(dimensionResource(id = R.dimen.dc_padding_100))
+            )
+        }
+        TitleText(stringResource(id = R.string.app_name))
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun SplashScreenPreview() {
-    Splash()
-}

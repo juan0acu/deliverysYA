@@ -1,4 +1,4 @@
-package com.example.deliverysya.ui.theme
+package com.example.uicomponents.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

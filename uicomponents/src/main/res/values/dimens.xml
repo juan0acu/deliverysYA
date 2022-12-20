@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- padding -->
+    <dimen name="dc_padding_0">0dp</dimen>
+    <dimen name="dc_padding_130">130dp</dimen>
+
+</resources>

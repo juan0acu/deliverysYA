@@ -12,14 +12,16 @@ import com.example.deliverysya.ui.screens.SplashScreen
 fun AppNavigation() {
 
     val navController = rememberNavController()
-    NavHost(navController = navController ,
-            startDestination = AppScreen.SplashScreen.route)
+    NavHost(
+        navController = navController,
+        startDestination = AppScreen.SplashScreen.route
+    )
     {
-       composable(AppScreen.SplashScreen.route){
-        SplashScreen(navController)
-       }
-        composable(AppScreen.LoginScreen.route){
-          LoginScreen(navController)
+        composable(AppScreen.SplashScreen.route) {
+            SplashScreen(navController = navController)
+        }
+        composable(AppScreen.LoginScreen.route) {
+            LoginScreen(navController)
         }
     }
 }
