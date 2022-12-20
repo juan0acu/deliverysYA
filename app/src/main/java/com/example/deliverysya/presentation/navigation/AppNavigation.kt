@@ -4,21 +4,22 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.deliverysya.ui.screens.loginScreen
-import com.example.deliverysya.ui.screens.splashScreen
+import com.example.deliverysya.ui.screens.LoginScreen
+import com.example.deliverysya.ui.screens.SplashScreen
+
 
 @Composable
-fun appNavigation() {
+fun AppNavigation() {
 
     val navController = rememberNavController()
     NavHost(navController = navController ,
             startDestination = AppScreen.SplashScreen.route)
     {
        composable(AppScreen.SplashScreen.route){
-        splashScreen(navController)
+        SplashScreen(navController)
        }
         composable(AppScreen.LoginScreen.route){
-          loginScreen(navController)
+          LoginScreen(navController)
         }
     }
 }

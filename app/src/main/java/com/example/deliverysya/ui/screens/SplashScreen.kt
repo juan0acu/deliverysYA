@@ -14,33 +14,33 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.deliverysya.R
 import com.example.deliverysya.presentation.navigation.AppScreen
-import com.example.deliverysya.ui.componets.titleText
+import com.example.deliverysya.ui.componets.TitleText
 import kotlinx.coroutines.delay
 
 @Composable
-fun splashScreen(navController: NavController) {
+fun SplashScreen(navController: NavController) {
 
     LaunchedEffect(key1 = true){
         delay(3000)
         navController.popBackStack()
         navController.navigate(AppScreen.LoginScreen.route)
     }
-    splash()
+    Splash()
 }
 
 @Composable
-fun splash() {
+fun Splash() {
     Column(modifier = Modifier.padding(top = 130.dp).fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
         ) {
         Image(painter = painterResource(id = R.drawable.dise_logo),
             contentDescription ="Logo" )
-        titleText("DeliverysYA")
+        TitleText("DeliverysYA")
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun splashScreenPreview() {
-    splash()
+fun SplashScreenPreview() {
+    Splash()
 }

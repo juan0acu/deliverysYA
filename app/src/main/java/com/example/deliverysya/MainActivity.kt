@@ -10,7 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.deliverysya.presentation.navigation.appNavigation
+import com.example.deliverysya.presentation.navigation.AppNavigation
 import com.example.deliverysya.ui.theme.DeliverysYaTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                   appNavigation()
+                   AppNavigation()
                 }
             }
         }

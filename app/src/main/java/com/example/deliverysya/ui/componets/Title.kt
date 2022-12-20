@@ -7,7 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.deliverysya.ui.theme.DeliverysYaTheme
 
 @Composable
-fun titleText(title: String) {
+fun TitleText(title: String) {
     Text(title, style = MaterialTheme.typography.h3)
 }
 
@@ -15,9 +15,9 @@ fun titleText(title: String) {
     showBackground = true
 )
 @Composable
-fun titleTextPreview() {
+fun TitleTextPreview() {
     DeliverysYaTheme {
-        titleText("Title")
+        TitleText("Title")
     }
 
 }

@@ -6,17 +6,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 
 @Composable
-fun loginScreen(navController: NavController) {
-    login()
+fun LoginScreen(navController: NavController) {
+    Login()
 }
 
 @Composable
-fun login() {
+fun Login() {
     Text("Login")
 }
 
 @Preview(showBackground = true)
 @Composable
-fun loginScreenPreview() {
-    login()
+fun LoginScreenPreview() {
+    Login()
 }
