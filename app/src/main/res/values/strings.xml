@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">DeliverysYa</string>
     <string name="logo_name">Logotype</string>
+    <string name="text_empty">Text Empty</string>
+    <string name="text_ok">Aceptar</string>
     <string name="title">Titular</string>
     <string name="welcome_login">Bienvenido Login</string>
-
+    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
 </resources>

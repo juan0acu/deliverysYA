@@ -4,4 +4,7 @@
     <string name="logo_name">Logo</string>
     <string name="title">Title</string>
     <string name="welcome_login">Welcome Login</string>
+    <string name="text_empty">Text Empty</string>
+    <string name="text_ok">Aceptar</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
 </resources>
