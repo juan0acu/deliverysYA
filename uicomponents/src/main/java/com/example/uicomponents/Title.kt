@@ -1,13 +1,14 @@
-package com.example.deliverysya.ui.componets
+package com.example.uicomponents
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.deliverysya.ui.theme.DeliverysYaTheme
+import com.example.uicomponents.theme.DeliverysYaTheme
 
 @Composable
-fun titleText(title: String) {
+fun TitleText(title: String) {
     Text(title, style = MaterialTheme.typography.h3)
 }
 
@@ -15,9 +16,9 @@ fun titleText(title: String) {
     showBackground = true
 )
 @Composable
-fun titleTextPreview() {
+fun TitleTextPreview() {
     DeliverysYaTheme {
-        titleText("Title")
+        TitleText(stringResource(id = R.string.title))
     }
 
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DeliverysYa</string>
+    <string name="logo_name">Logo</string>
+    <string name="title">Title</string>
+    <string name="welcome_login">Welcome Login</string>
+</resources>

@@ -1,4 +1,4 @@
-package com.example.deliverysya.ui.theme
+package com.example.uicomponents.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.graphics.Color
