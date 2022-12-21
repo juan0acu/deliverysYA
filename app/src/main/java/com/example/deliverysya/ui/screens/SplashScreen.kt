@@ -26,12 +26,14 @@ import com.example.deliverysya.R
 import com.example.deliverysya.presentation.navigation.AppScreen
 import com.example.uicomponents.TitleText
 import kotlinx.coroutines.delay
+import kotlin.time.times
 
 @Composable
 fun SplashScreen(modifier: Modifier = Modifier, navController: NavController) {
+    val timeMillis : Long = 3000
 Column() {
     LaunchedEffect(key1 = true) {
-        delay(3000)
+        delay(timeMillis)
         navController.popBackStack()
         navController.navigate(AppScreen.LoginScreen.route)
     }
