@@ -1,21 +1,21 @@
 # Aplicación para promover un mejor ingreso a los repartidores entre restaurantes y riders.
 
-Permite que los restaurantes puedan indicar cuando su pedido estara listo, distancia y monto a ofrecer por el Delivery.
+Permite que los restaurantes puedan indicar cuando su pedido estará listo, distancia y monto a ofrecer por el Delivery.
 
 Se basa en una oferta echa por el Restaurante, y los repartidores podrán aceptar la oferta propuesta incrementarla un poco o hacer una nueva oferta por su servicio.
 
-Ya que eso podrá ayudar a elevar o disminuir los montos depende del transito, clima y movimiento de pedidos.
+Ya que eso podrá ayudar a elevar o disminuir los montos depende del tránsito, clima y movimiento de pedidos.
 
-Los modulos que se desean realizar en esta aplicación son:
+Los módulos que se desean realizar en esta aplicación son:
 
-- SplashScreen. --> Realizado
-- Registro Usuario (Riders - Restaurante). --> En construcción
+- SplashScreen. -- Realizado
+- Registro Usuario (Riders - Restaurante). -- En construcción
 - Login Usuario.
-- Menu Principal Riders (Donde podran visualizar los pedidos disponibles).
+- Menú Principal Riders (Donde podrán visualizar los pedidos disponibles).
 - Historial de pedidos realizados.
 - Clasificación por pedidos entregados.
-- Vista de pedido en marcha. 
-- Menu Principal Restaurante (Donde los restaurantes solicitan un Riders)
+- Vista de pedido en marcha.
+- Menú Principal Restaurante (Donde los restaurantes solicitan un Riders)
 - Historial de pedidos solicitados.
 - Clasificación como restaurante.
 
