@@ -7,8 +7,12 @@
     <string name="text_empty">Text Empty</string>
     <string name="text_ok">Aceptar</string>
     <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
-    <string name="slogan">Democratizing the Deliverys of all restaurants.</string>
+    <string name="slogan">Get into Account</string>
     <string name="ingresar_login">Get into</string>
     <string name="ingresar_pass">Enter your password</string>
     <string name="ingresar_email">Enter your email</string>
+    <string name="olvidaste_pass">Forgot Password?</string>
+    <string name="no_cuenta">Do not have an Account?</string>
+    <string name="registrar_cuenta">Sign up</string>
+    <string name="alternar_icon">Toggle Password Icon</string>
 </resources>

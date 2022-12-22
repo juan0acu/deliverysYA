@@ -7,4 +7,5 @@
     <dimen name="dc_padding_25">25dp</dimen>
     <dimen name="dc_padding_130">130dp</dimen>
     <dimen name="dc_padding_100">100dp</dimen>
+    <dimen name="dc_padding_200">200dp</dimen>
 </resources>

@@ -9,16 +9,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
-    primary = primaryColor,
-    primaryVariant = primaryColor,
+    primary = DeliveryColor,
+    primaryVariant = DeliveryColor,
     secondary = secundaryColor,
     secondaryVariant = tercerColor
 )
 
 private val LightColorPalette = lightColors(
-    primary = primaryColor,
+    primary = DeliveryColor,
     primaryVariant = secundaryColor,
-    secondary = primaryColor
+    secondary = DeliveryColor
 
     /* Other default colors to override
     background = Color.White,
@@ -33,7 +33,7 @@ private val LightColorPalette = lightColors(
 @Composable
 fun DeliverysYaTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
-        DarkColorPalette
+            DarkColorPalette
     } else {
         LightColorPalette
     }
@@ -51,3 +51,4 @@ fun DeliverysYaTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compo
         content = content
     )
 }
+

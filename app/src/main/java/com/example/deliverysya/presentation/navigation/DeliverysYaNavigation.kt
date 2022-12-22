@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.deliverysya.ui.screens.login.LoginScreen
 import com.example.deliverysya.ui.screens.SplashScreen
+import com.example.deliverysya.ui.screens.login.LoginScreenss
 
 
 @Composable
@@ -22,6 +23,9 @@ fun DeliverysYaNavigation() {
         }
         composable(AppScreen.LoginScreen.route) {
             LoginScreen(navController)
+        }
+        composable(AppScreen.LoginScreen2.route) {
+            LoginScreenss(navController = navController)
         }
     }
 }

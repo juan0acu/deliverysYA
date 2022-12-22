@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.uicomponents.theme.DeliverysYaTheme
 
 
 typealias buttonAction = ()-> Unit
@@ -26,7 +25,7 @@ fun CustomButton(label: String, action: buttonAction) {
         modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.large,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.secondary,
+            backgroundColor = MaterialTheme.colors.primary,
             contentColor = Color.White
         ),
         elevation = ButtonDefaults.elevation(

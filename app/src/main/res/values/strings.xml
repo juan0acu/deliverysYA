@@ -6,9 +6,13 @@
     <string name="title">Titular</string>
     <string name="welcome_login">Bienvenido</string>
     <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
-    <string name="slogan">Democratizando los Deliverys de todos los restaurantes</string>
+    <string name="slogan">Ingresa a tu cuenta</string>
     <string name="ingresar_login">Ingresar</string>
     <string name="ingresar_email">Ingrese su correo</string>
     <string name="ingresar_pass">Ingresar su contraseña</string>
+    <string name="olvidaste_pass">¿Olvidaste tu contraseña?</string>
+    <string name="no_cuenta">¿No tiene una cuenta? </string>
+    <string name="registrar_cuenta">Registrate Aquí</string>
+    <string name="alternar_icon">Toggle Password Icon</string>
 
 </resources>

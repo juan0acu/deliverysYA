@@ -35,7 +35,7 @@ Column() {
     LaunchedEffect(key1 = true) {
         delay(timeMillis)
         navController.popBackStack()
-        navController.navigate(AppScreen.LoginScreen.route)
+        navController.navigate(AppScreen.LoginScreen2.route)
     }
     SplashScreenInitialApp(
         modifier = modifier
@@ -57,11 +57,11 @@ fun SplashScreenInitialApp(modifier: Modifier) {
             .fillMaxWidth()
             .wrapContentHeight(), contentAlignment = Alignment.Center) {
             Image(
-                painter = painterResource(id = R.drawable.dise_logo_500dp),
+                painter = painterResource(id = R.drawable.new_logo_500dp),
                 contentDescription = stringResource(id = R.string.logo_name),
                 modifier = modifier
-                    .height(dimensionResource(id = R.dimen.dc_padding_100))
-                    .width(dimensionResource(id = R.dimen.dc_padding_100))
+                    .height(dimensionResource(id = R.dimen.dc_padding_200))
+                    .width(dimensionResource(id = R.dimen.dc_padding_200))
             )
         }
         TitleText(stringResource(id = R.string.app_name))
