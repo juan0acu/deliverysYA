@@ -1,18 +1,15 @@
 package com.example.uicomponents.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
     primary = primaryColor,
     primaryVariant = primaryColor,
-    secondary = secundaryColor,
-    secondaryVariant = tercerColor
+    secondary = secundaryColor
 )
 
 private val LightColorPalette = lightColors(
@@ -39,9 +36,9 @@ fun DeliverysYaTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compo
     }
 
     val type = if (darkTheme) {
-        TypographyDark
+        com.example.deliverysya.ui.theme.TypographyDark
     } else {
-        Typography
+        com.example.deliverysya.ui.theme.Typography
     }
 
     MaterialTheme(

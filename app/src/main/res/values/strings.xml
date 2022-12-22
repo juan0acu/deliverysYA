@@ -4,6 +4,11 @@
     <string name="text_empty">Text Empty</string>
     <string name="text_ok">Aceptar</string>
     <string name="title">Titular</string>
-    <string name="welcome_login">Bienvenido Login</string>
+    <string name="welcome_login">Bienvenido</string>
     <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+    <string name="slogan">Democratizando los Deliverys de todos los restaurantes</string>
+    <string name="ingresar_login">Ingresar</string>
+    <string name="ingresar_email">Ingrese su correo</string>
+    <string name="ingresar_pass">Ingresar su contraseña</string>
+
 </resources>
