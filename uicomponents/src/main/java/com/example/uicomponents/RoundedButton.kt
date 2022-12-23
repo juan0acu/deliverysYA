@@ -22,7 +22,7 @@ fun RoundedButton(
     displayProgressBar: Boolean = false,
     onClick: () -> Unit
 ) {
-    if(!displayProgressBar) {
+
         Button(
             modifier = modifier
                 .width(280.dp)
@@ -40,11 +40,5 @@ fun RoundedButton(
                 )
             )
         }
-    } else {
-        CircularProgressIndicator(
-            modifier = Modifier.size(50.dp),
-            color = MaterialTheme.colors.primary,
-            strokeWidth = 6.dp
-        )
-    }
+
 }

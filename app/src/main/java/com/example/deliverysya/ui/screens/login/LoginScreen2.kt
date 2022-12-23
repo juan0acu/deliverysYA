@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -59,7 +60,11 @@ import com.example.uicomponents.TransparentTextField
 import com.example.uicomponents.theme.DeliveryColor
 
 @Composable
-fun LoginScreenss(navController: NavController) {
+fun LoginScreenss(
+    navController: NavController,
+    isLoading: Boolean,
+    onLoginClick: () -> Unit
+) {
 
     val emailValue = rememberSaveable { mutableStateOf("") }
     val passwordValue = rememberSaveable { mutableStateOf("") }
@@ -173,13 +178,16 @@ fun LoginScreenss(navController: NavController) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
+                        if(isLoading){
+                            CircularProgressIndicator(
+                                color = DeliveryColor
+                            )
+                        }else{
                         RoundedButton(
                             text = "Login",
                             displayProgressBar = false,
-                            onClick = {
-                                // TODO("LOGIN")
-                            }
-                        )
+                            onClick = onLoginClick
+                        )}
 
                         ClickableText(
                             text = buildAnnotatedString {
@@ -210,6 +218,6 @@ fun LoginScreenss(navController: NavController) {
 fun LoginScreen2Preview() {
     val navController = rememberNavController()
     MaterialTheme() {
-        LoginScreenss(navController = navController)
+        LoginScreenss(navController = navController,true){}
     }
 }

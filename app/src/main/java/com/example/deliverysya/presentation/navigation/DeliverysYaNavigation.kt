@@ -1,6 +1,10 @@
 package com.example.deliverysya.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -25,7 +29,10 @@ fun DeliverysYaNavigation() {
             LoginScreen(navController)
         }
         composable(AppScreen.LoginScreen2.route) {
-            LoginScreenss(navController = navController)
+            var isLoading by remember {mutableStateOf(false) }
+            LoginScreenss(navController = navController,isLoading){
+                isLoading = true
+            }
         }
     }
 }
