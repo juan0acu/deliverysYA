@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.deliverysya.R
-import com.example.deliverysya.presentation.navigation.AppScreen
+import com.example.deliverysya.ui.navigation.AppScreen
 import com.example.uicomponents.TitleText
 import kotlinx.coroutines.delay
 import kotlin.time.times

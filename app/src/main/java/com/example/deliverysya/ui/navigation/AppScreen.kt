@@ -1,4 +1,4 @@
-package com.example.deliverysya.presentation.navigation
+package com.example.deliverysya.ui.navigation
 
 sealed class AppScreen (val route: String){
     object SplashScreen: AppScreen("splash_screen")

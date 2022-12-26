@@ -1,9 +1,8 @@
-package com.example.deliverysya.presentation.navigation
+package com.example.deliverysya.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.setValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -11,6 +10,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.deliverysya.ui.screens.login.LoginScreen
 import com.example.deliverysya.ui.screens.SplashScreen
 import com.example.deliverysya.ui.screens.login.LoginScreenss
+import com.example.deliverysya.presentation.login.LoginViewModel
+import androidx.activity.viewModels
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
+//import com.example.deliverysya.presentation.login.LoginViewModelFactory
 
 
 @Composable
@@ -29,9 +33,12 @@ fun DeliverysYaNavigation() {
             LoginScreen(navController)
         }
         composable(AppScreen.LoginScreen2.route) {
-            var isLoading by remember {mutableStateOf(false) }
-            LoginScreenss(navController = navController,isLoading){
-                isLoading = true
+            val viewModel : LoginViewModel = viewModel()
+
+//            val viewModel: LoginViewModel by viewModels()
+            val isLoading by viewModel.isLoading().observeAsState(false)
+            LoginScreenss(navController = navController, isLoading) {
+                viewModel.loginWhithGoogle()
             }
         }
     }

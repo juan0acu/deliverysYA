@@ -1,5 +1,6 @@
 package com.example.deliverysya.ui.screens.login
 
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,20 +10,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
@@ -53,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.deliverysya.R
+import com.example.deliverysya.presentation.login.LoginViewModel
 import com.example.uicomponents.BodyText
 import com.example.uicomponents.RoundedButton
 import com.example.uicomponents.TitleText
@@ -65,7 +63,6 @@ fun LoginScreenss(
     isLoading: Boolean,
     onLoginClick: () -> Unit
 ) {
-
     val emailValue = rememberSaveable { mutableStateOf("") }
     val passwordValue = rememberSaveable { mutableStateOf("") }
     var passwordVisibility by remember { mutableStateOf(false) }
@@ -76,6 +73,7 @@ fun LoginScreenss(
             .fillMaxSize()
             .background(MaterialTheme.colors.background)
     ) {
+
         Image(
             painter = painterResource(id = R.drawable.delv_log_500dp),
             contentDescription = stringResource(id = R.string.logo_name),
@@ -203,7 +201,7 @@ fun LoginScreenss(
                                 }
                             }
                         ) {
-                            // TODO("NAVIGATE TO REGISTER SCREEN")
+                            // TODO("TO REGISTER SCREEN")
                         }
                     }
                 }
