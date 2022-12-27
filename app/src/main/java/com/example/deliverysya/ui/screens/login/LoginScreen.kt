@@ -70,6 +70,7 @@ fun LoginScreens(
     val focusManager = LocalFocusManager.current
     val loginViewModel : LoginViewModel = viewModel()
     val isLoading by loginViewModel.isLoading().observeAsState(false)
+    val hasErrors by loginViewModel.hasErrors().observeAsState(false)
 
 
     if (isLoading){
@@ -188,9 +189,13 @@ fun LoginScreens(
 
                         RoundedButton(
                             text = "Login",
-                            displayProgressBar = false,
+                          // validate = false,
                             onClick = {
-                                loginViewModel.loginEmailPass(emailValue.value,passwordValue.value,activity)
+                               loginViewModel.validateEmail(emailValue.value,activity)
+                                loginViewModel.validatePassword(passwordValue.value,activity)
+                                if(hasErrors){
+                                    loginViewModel.loginEmailPass(emailValue.value,passwordValue.value,activity)
+                                }
                             }
                         )
 

@@ -19,7 +19,7 @@ import com.example.uicomponents.theme.DeliveryColor
 fun RoundedButton(
     modifier: Modifier = Modifier,
     text: String,
-    displayProgressBar: Boolean = false,
+    validate: Boolean = false,
     onClick: () -> Unit
 ) {
 
@@ -40,5 +40,4 @@ fun RoundedButton(
                 )
             )
         }
-
 }

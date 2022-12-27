@@ -14,5 +14,8 @@
     <string name="no_cuenta">¿No tiene una cuenta? </string>
     <string name="registrar_cuenta">Registrate Aquí</string>
     <string name="alternar_icon">Toggle Password Icon</string>
+    <string name="login_success">Inicio de sesión con correo electrónico exitoso</string>
+    <string name="login_error">Error en el inicio de sesión correo o clave errónea</string>
+
 
 </resources>
