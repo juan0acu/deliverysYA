@@ -1,6 +1,5 @@
 package com.example.deliverysya.ui.screens.login
 
-import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +23,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -47,10 +47,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.deliverysya.MainActivity
 import com.example.deliverysya.R
 import com.example.deliverysya.presentation.login.LoginViewModel
+import com.example.deliverysya.ui.navigation.AppScreen
 import com.example.uicomponents.BodyText
 import com.example.uicomponents.RoundedButton
 import com.example.uicomponents.TitleText
@@ -60,13 +63,20 @@ import com.example.uicomponents.theme.DeliveryColor
 @Composable
 fun LoginScreenss(
     navController: NavController,
-    isLoading: Boolean,
-    onLoginClick: () -> Unit
+    activity: MainActivity,
 ) {
     val emailValue = rememberSaveable { mutableStateOf("") }
     val passwordValue = rememberSaveable { mutableStateOf("") }
     var passwordVisibility by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
+    val loginViewModel : LoginViewModel = viewModel()
+    val isLoading by loginViewModel.isLoading().observeAsState(false)
+
+
+    if (isLoading){
+        navController.popBackStack()
+        navController.navigate(AppScreen.IntroductionRiders.route)
+    }
 
     Box(
         modifier = Modifier
@@ -135,8 +145,8 @@ fun LoginScreenss(
                             keyboardActions = KeyboardActions(
                                 onDone = {
                                     focusManager.clearFocus()
+                                    loginViewModel.loginEmailPass(emailValue.value,passwordValue.value,activity)
 
-                                    //TODO("LOGIN")
                                 }
                             ),
                             imeAction = ImeAction.Done,
@@ -176,16 +186,14 @@ fun LoginScreenss(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        if(isLoading){
-                            CircularProgressIndicator(
-                                color = DeliveryColor
-                            )
-                        }else{
+
                         RoundedButton(
                             text = "Login",
                             displayProgressBar = false,
-                            onClick = onLoginClick
-                        )}
+                            onClick = {
+                                loginViewModel.loginEmailPass(emailValue.value,passwordValue.value,activity)
+                            }
+                        )
 
                         ClickableText(
                             text = buildAnnotatedString {
@@ -211,11 +219,15 @@ fun LoginScreenss(
     }
 }
 
+
+
 @Preview
 @Composable
 fun LoginScreen2Preview() {
     val navController = rememberNavController()
+    val activity = MainActivity()
     MaterialTheme() {
-        LoginScreenss(navController = navController,true){}
+        LoginScreenss(navController = navController, activity )
     }
 }
+

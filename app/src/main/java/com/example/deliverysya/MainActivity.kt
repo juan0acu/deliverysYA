@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import com.example.deliverysya.presentation.login.LoginViewModel
 import com.example.deliverysya.ui.navigation.DeliverysYaNavigation
 
-
+// cambiar probar con APP
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                   DeliverysYaNavigation()
+                   DeliverysYaNavigation(this)
                 }
             }
         }
