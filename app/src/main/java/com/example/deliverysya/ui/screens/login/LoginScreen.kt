@@ -58,6 +58,7 @@ import com.example.uicomponents.BodyText
 import com.example.uicomponents.RoundedButton
 import com.example.uicomponents.TitleText
 import com.example.uicomponents.TransparentTextField
+import com.example.uicomponents.model.TransparentTextFieldAttrs
 import com.example.uicomponents.theme.DeliveryColor
 
 
@@ -70,12 +71,12 @@ fun LoginScreens(
     val passwordValue = rememberSaveable { mutableStateOf("") }
     var passwordVisibility by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
-    val loginViewModel : LoginViewModel = viewModel()
+    val loginViewModel: LoginViewModel = viewModel()
     val isLoading by loginViewModel.isLoading().observeAsState(false)
     val hasErrors by loginViewModel.hasErrors().observeAsState(false)
 
 
-    if (isLoading){
+    if (isLoading) {
         navController.popBackStack()
         navController.navigate(AppScreen.IntroductionRiders.route)
     }
@@ -114,8 +115,8 @@ fun LoginScreens(
                     )
 
                     BodyText(
-                        body = stringResource(id = R.string.slogan)                     
-                        )
+                        body = stringResource(id = R.string.slogan)
+                    )
 
                     Column(
                         modifier = Modifier
@@ -124,51 +125,58 @@ fun LoginScreens(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                       TransparentTextField(
-                           textFieldValue = emailValue,
-                            textLabel = stringResource(id = R.string.ingresar_email),
-                            keyboardType = KeyboardType.Email,
-                            keyboardActions = KeyboardActions(
-                                onNext = {
-                                    focusManager.moveFocus(FocusDirection.Down)
-                                }
-                            ),
-                            imeAction = ImeAction.Next
-                        )
-
                         TransparentTextField(
-                            textFieldValue = passwordValue,
-                            textLabel = stringResource(id = R.string.ingresar_pass),
-                            keyboardType = KeyboardType.Password,
-                            keyboardActions = KeyboardActions(
-                                onDone = {
-                                    focusManager.clearFocus()
-                                    loginViewModel.loginEmailPass(emailValue.value,passwordValue.value,activity)
-
-                                }
-                            ),
-                            imeAction = ImeAction.Done,
-                            trailingIcon = {
-                                IconButton(
-                                    onClick = {
-                                        passwordVisibility = !passwordVisibility
+                            TransparentTextFieldAttrs(
+                                textFieldValue = emailValue,
+                                textLabel = stringResource(id = R.string.ingresar_email),
+                                keyboardType = KeyboardType.Email,
+                                keyboardActions = KeyboardActions(
+                                    onNext = {
+                                        focusManager.moveFocus(FocusDirection.Down)
                                     }
-                                ) {
-                                    Icon(
-                                        imageVector = if (passwordVisibility) {
-                                            Icons.Default.Visibility
-                                        } else {
-                                            Icons.Default.VisibilityOff
-                                        },
-                                        contentDescription = stringResource(id = R.string.alternar_icon)
-                                    )
+                                ),
+                                imeAction = ImeAction.Next
+                            )
+                        )
+                        TransparentTextField(
+                            TransparentTextFieldAttrs(
+                                textFieldValue = passwordValue,
+                                textLabel = stringResource(id = R.string.ingresar_pass),
+                                keyboardType = KeyboardType.Password,
+                                keyboardActions = KeyboardActions(
+                                    onDone = {
+                                        focusManager.clearFocus()
+                                        loginViewModel.loginEmailPass(
+                                            emailValue.value,
+                                            passwordValue.value,
+                                            activity
+                                        )
+
+                                    }
+                                ),
+                                imeAction = ImeAction.Done,
+                                trailingIcon = {
+                                    IconButton(
+                                        onClick = {
+                                            passwordVisibility = !passwordVisibility
+                                        }
+                                    ) {
+                                        Icon(
+                                            imageVector = if (passwordVisibility) {
+                                                Icons.Default.Visibility
+                                            } else {
+                                                Icons.Default.VisibilityOff
+                                            },
+                                            contentDescription = stringResource(id = R.string.alternar_icon)
+                                        )
+                                    }
+                                },
+                                visualTransformation = if (passwordVisibility) {
+                                    VisualTransformation.None
+                                } else {
+                                    PasswordVisualTransformation()
                                 }
-                            },
-                            visualTransformation = if (passwordVisibility) {
-                                VisualTransformation.None
-                            } else {
-                                PasswordVisualTransformation()
-                            }
+                            )
                         )
 
                         Text(
@@ -187,12 +195,16 @@ fun LoginScreens(
 
                         RoundedButton(
                             text = stringResource(id = R.string.ingresar_login),
-                          // validate = false,
+                            // validate = false,
                             onClick = {
-                               loginViewModel.validateEmail(emailValue.value,activity)
-                                loginViewModel.validatePassword(passwordValue.value,activity)
-                                if(hasErrors){
-                                    loginViewModel.loginEmailPass(emailValue.value,passwordValue.value,activity)
+                                loginViewModel.validateEmail(emailValue.value, activity)
+                                loginViewModel.validatePassword(passwordValue.value, activity)
+                                if (hasErrors) {
+                                    loginViewModel.loginEmailPass(
+                                        emailValue.value,
+                                        passwordValue.value,
+                                        activity
+                                    )
                                 }
                             }
                         )
@@ -272,7 +284,7 @@ fun EnterForm(activity:Activity) {
 }*/
 
 @Composable
-fun RegisterAccount(){
+fun RegisterAccount() {
 
     ClickableText(
         text = buildAnnotatedString {
@@ -299,7 +311,7 @@ fun LoginScreen2Preview() {
     val navController = rememberNavController()
     val activity = MainActivity()
     MaterialTheme() {
-        LoginScreens(navController = navController, activity )
+        LoginScreens(navController = navController, activity)
     }
 }
 

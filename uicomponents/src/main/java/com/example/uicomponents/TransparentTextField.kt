@@ -14,49 +14,27 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
-
-/*data class TransparentTextFieldAttrs(
-    val modifier: Modifier = Modifier,
-    val textFieldValue: MutableState<String>,
-    val textLabel: String,
-    val maxChar: Int? = null,
-    val  capitalization: KeyboardCapitalization = KeyboardCapitalization.None,
-    val  keyboardType: KeyboardType,
-    val  keyboardActions: KeyboardActions,
-    val imeAction: ImeAction,
-    val  trailingIcon: @Composable() (() -> Unit)? = null,
-    val visualTransformation: VisualTransformation = VisualTransformation.None
-)*/
+import com.example.uicomponents.model.TransparentTextFieldAttrs
 
 @Composable
 fun TransparentTextField(
-    //transparentTextFieldAttrs: TransparentTextFieldAttrs
-    modifier: Modifier = Modifier,
-    textFieldValue: MutableState<String>,
-    textLabel: String,
-    maxChar: Int? = null,
-    capitalization: KeyboardCapitalization = KeyboardCapitalization.None,
-    keyboardType: KeyboardType,
-    keyboardActions: KeyboardActions,
-    imeAction: ImeAction,
-     trailingIcon: @Composable() (() -> Unit)? = null,
-    visualTransformation: VisualTransformation = VisualTransformation.None
+    transparentTextFieldAttrs: TransparentTextFieldAttrs
 ) {
     TextField(
-        modifier =modifier.fillMaxWidth(),
-        value = textFieldValue.value.take(maxChar ?: 40),
-        onValueChange = {textFieldValue.value = it },
+        modifier =transparentTextFieldAttrs.modifier.fillMaxWidth(),
+        value = transparentTextFieldAttrs.textFieldValue.value.take(transparentTextFieldAttrs.maxChar ?: 40),
+        onValueChange = {transparentTextFieldAttrs.textFieldValue.value = it },
         label = {
-            Text(text = textLabel)
+            Text(text = transparentTextFieldAttrs.textLabel)
         },
-        trailingIcon = trailingIcon,
+        trailingIcon = transparentTextFieldAttrs.trailingIcon,
         keyboardOptions = KeyboardOptions(
-            capitalization = capitalization,
-            keyboardType = keyboardType,
-            imeAction = imeAction
+            capitalization = transparentTextFieldAttrs.capitalization,
+            keyboardType = transparentTextFieldAttrs.keyboardType,
+            imeAction = transparentTextFieldAttrs.imeAction
         ),
-        keyboardActions = keyboardActions,
-        visualTransformation = visualTransformation,
+        keyboardActions = transparentTextFieldAttrs.keyboardActions,
+        visualTransformation = transparentTextFieldAttrs.visualTransformation,
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.Transparent
         )
