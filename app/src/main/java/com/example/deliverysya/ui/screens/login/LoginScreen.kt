@@ -1,5 +1,6 @@
 package com.example.deliverysya.ui.screens.login
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -59,6 +60,7 @@ import com.example.uicomponents.TitleText
 import com.example.uicomponents.TransparentTextField
 import com.example.uicomponents.theme.DeliveryColor
 
+
 @Composable
 fun LoginScreens(
     navController: NavController,
@@ -84,11 +86,7 @@ fun LoginScreens(
             .background(MaterialTheme.colors.background)
     ) {
 
-        Image(
-            painter = painterResource(id = R.drawable.delv_log_500dp),
-            contentDescription = stringResource(id = R.string.logo_name),
-            contentScale = ContentScale.Inside
-        )
+        LogoBannerSection()
 
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -126,8 +124,8 @@ fun LoginScreens(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        TransparentTextField(
-                            textFieldValue = emailValue,
+                       TransparentTextField(
+                           textFieldValue = emailValue,
                             textLabel = stringResource(id = R.string.ingresar_email),
                             keyboardType = KeyboardType.Email,
                             keyboardActions = KeyboardActions(
@@ -188,7 +186,7 @@ fun LoginScreens(
                     ) {
 
                         RoundedButton(
-                            text = "Login",
+                            text = stringResource(id = R.string.ingresar_login),
                           // validate = false,
                             onClick = {
                                loginViewModel.validateEmail(emailValue.value,activity)
@@ -198,23 +196,7 @@ fun LoginScreens(
                                 }
                             }
                         )
-
-                        ClickableText(
-                            text = buildAnnotatedString {
-                                append(stringResource(id = R.string.no_cuenta))
-
-                                withStyle(
-                                    style = SpanStyle(
-                                        color = DeliveryColor,
-                                        fontWeight = FontWeight.Bold
-                                    )
-                                ) {
-                                    append(stringResource(id = R.string.registrar_cuenta))
-                                }
-                            }
-                        ) {
-                            // TODO("TO REGISTER SCREEN")
-                        }
+                        RegisterAccount()
                     }
                 }
             }
@@ -223,6 +205,92 @@ fun LoginScreens(
     }
 }
 
+@Composable
+fun LogoBannerSection() {
+    Image(
+        painter = painterResource(id = R.drawable.delv_log_500dp),
+        contentDescription = stringResource(id = R.string.logo_name),
+        contentScale = ContentScale.Inside
+    )
+
+}
+
+/*@Composable
+fun EnterForm(activity:Activity) {
+    val emailValue = rememberSaveable { mutableStateOf("") }
+    val passwordValue = rememberSaveable { mutableStateOf("") }
+    var passwordVisibility by remember { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
+    val loginViewModel : LoginViewModel = viewModel()
+
+    TransparentTextField(
+        textFieldValue = emailValue,
+        textLabel = stringResource(id = R.string.ingresar_email),
+        keyboardType = KeyboardType.Email,
+        keyboardActions = KeyboardActions(
+            onNext = {
+                focusManager.moveFocus(FocusDirection.Down)
+            }
+        ),
+        imeAction = ImeAction.Next
+    )
+
+    TransparentTextField(
+        textFieldValue = passwordValue,
+        textLabel = stringResource(id = R.string.ingresar_pass),
+        keyboardType = KeyboardType.Password,
+        keyboardActions = KeyboardActions(
+            onDone = {
+                focusManager.clearFocus()
+                loginViewModel.loginEmailPass(emailValue.value,passwordValue.value,activity)
+
+            }
+        ),
+        imeAction = ImeAction.Done,
+        trailingIcon = {
+            IconButton(
+                onClick = {
+                    passwordVisibility = !passwordVisibility
+                }
+            ) {
+                Icon(
+                    imageVector = if (passwordVisibility) {
+                        Icons.Default.Visibility
+                    } else {
+                        Icons.Default.VisibilityOff
+                    },
+                    contentDescription = stringResource(id = R.string.alternar_icon)
+                )
+            }
+        },
+        visualTransformation = if (passwordVisibility) {
+            VisualTransformation.None
+        } else {
+            PasswordVisualTransformation()
+        }
+    )
+}*/
+
+@Composable
+fun RegisterAccount(){
+
+    ClickableText(
+        text = buildAnnotatedString {
+            append(stringResource(id = R.string.no_cuenta))
+
+            withStyle(
+                style = SpanStyle(
+                    color = DeliveryColor,
+                    fontWeight = FontWeight.Bold
+                )
+            ) {
+                append(stringResource(id = R.string.registrar_cuenta))
+            }
+        }
+    ) {
+        // TODO("TO REGISTER SCREEN")
+    }
+}
 
 
 @Preview

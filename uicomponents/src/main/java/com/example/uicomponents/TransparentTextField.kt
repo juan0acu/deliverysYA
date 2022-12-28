@@ -15,8 +15,22 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 
+/*data class TransparentTextFieldAttrs(
+    val modifier: Modifier = Modifier,
+    val textFieldValue: MutableState<String>,
+    val textLabel: String,
+    val maxChar: Int? = null,
+    val  capitalization: KeyboardCapitalization = KeyboardCapitalization.None,
+    val  keyboardType: KeyboardType,
+    val  keyboardActions: KeyboardActions,
+    val imeAction: ImeAction,
+    val  trailingIcon: @Composable() (() -> Unit)? = null,
+    val visualTransformation: VisualTransformation = VisualTransformation.None
+)*/
+
 @Composable
 fun TransparentTextField(
+    //transparentTextFieldAttrs: TransparentTextFieldAttrs
     modifier: Modifier = Modifier,
     textFieldValue: MutableState<String>,
     textLabel: String,
@@ -25,13 +39,13 @@ fun TransparentTextField(
     keyboardType: KeyboardType,
     keyboardActions: KeyboardActions,
     imeAction: ImeAction,
-    trailingIcon: @Composable() (() -> Unit)? = null,
+     trailingIcon: @Composable() (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     TextField(
-        modifier = modifier.fillMaxWidth(),
+        modifier =modifier.fillMaxWidth(),
         value = textFieldValue.value.take(maxChar ?: 40),
-        onValueChange = { textFieldValue.value = it },
+        onValueChange = {textFieldValue.value = it },
         label = {
             Text(text = textLabel)
         },
