@@ -1,5 +1,6 @@
 package com.example.uicomponents.model
 
+import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -20,4 +21,5 @@ data class TransparentTextFieldAttrs (
     val imeAction: ImeAction,
     val  trailingIcon: @Composable() (() -> Unit)? = null,
     val visualTransformation: VisualTransformation = VisualTransformation.None
+
 )

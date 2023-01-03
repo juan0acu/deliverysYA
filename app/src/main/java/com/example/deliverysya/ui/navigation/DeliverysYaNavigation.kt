@@ -8,6 +8,7 @@ import com.example.deliverysya.ui.screens.SplashScreen
 import com.example.deliverysya.ui.screens.login.LoginScreens
 import com.example.deliverysya.MainActivity
 import com.example.deliverysya.ui.screens.introduction_riders.IntroductionRiders
+import com.example.deliverysya.ui.screens.user_register.UserRegister
 
 
 @Composable
@@ -26,6 +27,9 @@ fun DeliverysYaNavigation(activity: MainActivity) {
         }
         composable(AppScreen.IntroductionRiders.route){
             IntroductionRiders(navController = navController)
+        }
+        composable(AppScreen.UserRegister.route){
+            UserRegister(navController = navController,activity)
         }
     }
 }

@@ -18,4 +18,8 @@
     <string name="login_success">Email login successful</string>
     <string name="login_error">Email login error or wrong password</string>
     <string name="text_email_empyy">Empty mail field</string>
+    <string name="title_register_usuario">User register</string>
+    <string name="text_name_user">Enter your name</string>
+    <string name="ingresar_pass_check">Enter your password again</string>
+    <string name="bot_register_user">Register</string>
 </resources>
