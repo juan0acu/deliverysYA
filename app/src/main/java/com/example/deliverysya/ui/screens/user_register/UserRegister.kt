@@ -53,7 +53,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.deliverysya.MainActivity
 import com.example.deliverysya.R
-import com.example.deliverysya.presentation.login.LoginViewModel
 import com.example.deliverysya.presentation.login.UserRegisterViewModel
 import com.example.deliverysya.ui.navigation.AppScreen
 import com.example.uicomponents.BodyText
@@ -85,7 +84,7 @@ fun UserRegister(navController: NavController,activity: MainActivity) {
 
     if (isLoading) {
         navController.popBackStack()
-        navController.navigate(AppScreen.IntroductionRiders.route)
+        navController.navigate(AppScreen.LoginScreen.route)
     }
 
     DeliverysYaTheme {
@@ -248,7 +247,7 @@ fun UserRegister(navController: NavController,activity: MainActivity) {
                                             UserRegisterViewModel.validatePassword(passwordValue.value, activity)
                                             UserRegisterViewModel.validatePassword2(passwordCheckValue.value, activity)
                                             if (hasErrors){
-                                                UserRegisterViewModel.validatePasswordCheck(passwordValue.value,passwordCheckValue.value,activity)
+                                                UserRegisterViewModel.validatePasswordCheck(passwordValue.value,passwordCheckValue.value,activity,nameValue.value,emailValue.value)
                                             }
                                         })
                                 }

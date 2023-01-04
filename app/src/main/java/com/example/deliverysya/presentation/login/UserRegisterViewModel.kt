@@ -2,15 +2,17 @@ package com.example.deliverysya.presentation.login
 
 import android.app.Activity
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.util.Log
 import android.widget.Toast
 import androidx.core.util.PatternsCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
 import java.util.regex.Pattern
 
-class UserRegisterViewModel:ViewModel(){
+class UserRegisterViewModel : ViewModel() {
     private val isLoading = MutableLiveData(false)
     private val hasErrors = MutableLiveData(false)
     fun isLoading(): LiveData<Boolean> = isLoading
@@ -20,7 +22,8 @@ class UserRegisterViewModel:ViewModel(){
     fun validateName(name: String, activity: Activity) {
         return if (name.isEmpty()) {
             Log.d(ContentValues.TAG, "Field can not be empty")
-            Toast.makeText(activity, "Campo Nombre y Apellido esta vacío", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Campo Nombre y Apellido esta vacío", Toast.LENGTH_SHORT)
+                .show()
             hasErrors.value = false
         } else {
             hasErrors.value = true
@@ -63,6 +66,7 @@ class UserRegisterViewModel:ViewModel(){
             hasErrors.value = true
         }
     }
+
     fun validatePassword2(password: String, activity: Activity) {
         val passwordRegex = Pattern.compile(
             "^" +
@@ -87,14 +91,47 @@ class UserRegisterViewModel:ViewModel(){
 
     }
 
-    fun validatePasswordCheck(password: String,password2:String, activity: Activity) {
+    fun validatePasswordCheck(
+        password: String,
+        password2: String,
+        activity: Activity,
+        name: String,
+        email: String
+    ) {
 
-        return if (password !=password2) {
+        return if (password != password2) {
             Toast.makeText(activity, "Contraseñas no coinciden", Toast.LENGTH_SHORT).show()
             hasErrors.value = false
         } else {
-            isLoading.value = true
+            userRegisterFirebase(name, email, password, activity)
         }
+
+    }
+
+    private fun userRegisterFirebase(
+        name: String,
+        email: String,
+        password: String,
+        activity: Activity
+    ) {
+        val auth = FirebaseAuth.getInstance()
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(activity) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "Usuario creado de forma exitosa:success")
+                    // val user = auth.currentUser
+                    isLoading.value = true
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "La creación de usuario a fallado", task.exception)
+                    Toast.makeText(
+                        activity, "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+            }
 
     }
 
