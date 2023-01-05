@@ -33,6 +33,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -51,6 +52,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.deliverysya.MainActivity
 import com.example.deliverysya.R
+import com.example.deliverysya.UserState
 import com.example.deliverysya.presentation.login.LoginViewModel
 import com.example.deliverysya.ui.navigation.AppScreen
 import com.example.uicomponents.BodyText
@@ -74,9 +76,10 @@ fun LoginScreens(
     val loginViewModel: LoginViewModel = viewModel()
     val isLoading by loginViewModel.isLoading().observeAsState(false)
     val hasErrors by loginViewModel.hasErrors().observeAsState(false)
+    val userValue by loginViewModel.userValue().observeAsState(UserState())
 
 
-    if (isLoading) {
+    if (userValue.user != null) {
         navController.popBackStack()
         navController.navigate(AppScreen.IntroductionRiders.route)
     }
@@ -201,11 +204,15 @@ fun LoginScreens(
                                     loginViewModel.validateEmail(emailValue.value, activity)
                                     loginViewModel.validatePassword(passwordValue.value, activity)
                                     if (hasErrors) {
-                                        loginViewModel.loginEmailPass(
+                                        loginViewModel.loginEmailPassRepository(
+                                            emailValue.value,
+                                            passwordValue.value
+                                        )
+                                       /* loginViewModel.loginEmailPass(
                                             emailValue.value,
                                             passwordValue.value,
                                             activity
-                                        )
+                                        )*/
                                     }
                                 }
                             )

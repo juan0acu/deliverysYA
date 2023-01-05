@@ -10,8 +10,10 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import com.example.deliverysya.presentation.login.LoginViewModel
 import com.example.deliverysya.ui.navigation.DeliverysYaNavigation
+import dagger.hilt.android.AndroidEntryPoint
 
 // cambiar probar con APP
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

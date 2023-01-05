@@ -8,31 +8,39 @@ import androidx.core.util.PatternsCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.deliverysya.UserState
+import com.example.deliverysya.repository.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import java.util.regex.Pattern
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(private val authRepository: AuthRepository) : ViewModel() {
     private val isLoading = MutableLiveData(false)
     private val hasErrors = MutableLiveData(false)
-
+    private val userValue = MutableLiveData(UserState())
+     //val stateFlow = MutableStateFlow(UserState())
 
     //private val timeMillis: Long = 5000
     fun isLoading(): LiveData<Boolean> = isLoading
     fun hasErrors(): LiveData<Boolean> = hasErrors
+    fun userValue(): LiveData<UserState> = userValue
 
-/*Aun no se trabajara con Login de Google
-    fun loginWhithGoogle(activity: Activity) {
-        isLoading.postValue(true)
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build()
+    fun loginEmailPassRepository(email: String,password: String){
+        authRepository.loginEmailPass(email,password).onEach {
+            if (it == null){
 
-        val client = GoogleSignIn.getClient(activity, gso);
-
-        val signInIntent: Intent = client.signInIntent
-        activity.startActivityForResult(signInIntent, 1)
-
-    }*/
+            }else{
+                userValue.value?.user = it
+            }
+        }.launchIn(viewModelScope)
+    }
 
     fun loginEmailPass(email: String, password: String, activity: Activity) {
         val auth = FirebaseAuth.getInstance()
