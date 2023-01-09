@@ -15,7 +15,26 @@ internal class LoginReducer {
         }
     }
 
+    private infix fun LoadingUiState.reduceWhith(result: LoginResult) = when (result){
+        is LoginResult.GetSingWhitEmailAndPasswordResult.InProgress -> LoadingUiState
+        is LoginResult.GetSingWhitEmailAndPasswordResult.Error -> ErrorUiState(result.error)
+        is LoginResult.GetSingWhitEmailAndPasswordResult.EmptyValues -> ErrorUiState(result.emptyvalue)
+        is LoginResult.GetSingWhitEmailAndPasswordResult.IncorrectCredentials-> ErrorUiState(result.message)
+
+        else -> throw unsupportedReduceCase()
+    }
+
     private infix fun DefaultUiState.reduceWith(result: LoginResult) = when (result) {
+        is LoginResult.GetSingWhitEmailAndPasswordResult.InProgress -> LoadingUiState
+        else -> throw unsupportedReduceCase()
+    }
+
+    private infix fun SuccessUiState.reduceWith(result: LoginResult) = when (result) {
+        is LoginResult.GetSingWhitEmailAndPasswordResult.InProgress -> LoadingUiState
+        else -> throw unsupportedReduceCase()
+    }
+
+    private infix fun ErrorUiState.reduceWith(result: LoginResult) = when (result) {
         is LoginResult.GetSingWhitEmailAndPasswordResult.InProgress -> LoadingUiState
         else -> throw unsupportedReduceCase()
     }
