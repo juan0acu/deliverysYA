@@ -4,5 +4,5 @@ import com.example.deliverysya.MainActivity
 
 internal sealed class LoginAction() {
 
-    data class GetSingWhitEmailAndPassword(val user: String, val Password: String,val activity: MainActivity) : LoginAction ()
+    data class GetSingWhitEmailAndPassword(val user: String, val Password: String) : LoginAction ()
 }
