@@ -1,5 +1,6 @@
 package com.example.deliverysya.ui.screens.user_register
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -64,6 +65,7 @@ import com.example.uicomponents.model.TransparentTextFieldAttrs
 import com.example.uicomponents.theme.DeliverysYaTheme
 import kotlinx.coroutines.launch
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun UserRegister(navController: NavController,activity: MainActivity) {

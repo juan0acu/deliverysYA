@@ -67,8 +67,8 @@ fun LoginScreens(
     navController: NavController,
     activity: MainActivity,
 ) {
-    val emailValue = rememberSaveable { mutableStateOf("") }
-    val passwordValue = rememberSaveable { mutableStateOf("") }
+    val emailValue1 = rememberSaveable { mutableStateOf("") }
+    val passwordValue1 = rememberSaveable { mutableStateOf("") }
     var passwordVisibility by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     val loginViewModel: LoginViewModel = viewModel()
@@ -126,9 +126,9 @@ fun LoginScreens(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            TransparentTextField(
+                           TransparentTextField(
                                 TransparentTextFieldAttrs(
-                                    textFieldValue = emailValue,
+                                    textFieldValue = emailValue1,
                                     textLabel = stringResource(id = R.string.ingresar_email),
                                     keyboardType = KeyboardType.Email,
                                     keyboardActions = KeyboardActions(
@@ -141,15 +141,15 @@ fun LoginScreens(
                             )
                             TransparentTextField(
                                 TransparentTextFieldAttrs(
-                                    textFieldValue = passwordValue,
+                                    textFieldValue = passwordValue1,
                                     textLabel = stringResource(id = R.string.ingresar_pass),
                                     keyboardType = KeyboardType.Password,
                                     keyboardActions = KeyboardActions(
                                         onDone = {
                                             focusManager.clearFocus()
                                             loginViewModel.loginEmailPass(
-                                                emailValue.value,
-                                                passwordValue.value,
+                                                emailValue1.value,
+                                                passwordValue1.value,
                                                 activity
                                             )
 
@@ -198,12 +198,12 @@ fun LoginScreens(
                                 text = stringResource(id = R.string.ingresar_login),
                                 // validate = false,
                                 onClick = {
-                                    loginViewModel.validateEmail(emailValue.value, activity)
-                                    loginViewModel.validatePassword(passwordValue.value, activity)
+                                    loginViewModel.validateEmail(emailValue1.value, activity)
+                                    loginViewModel.validatePassword(passwordValue1.value, activity)
                                     if (hasErrors) {
                                         loginViewModel.loginEmailPass(
-                                            emailValue.value,
-                                            passwordValue.value,
+                                            emailValue1.value,
+                                            passwordValue1.value,
                                             activity
                                         )
                                     }

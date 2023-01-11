@@ -2,7 +2,6 @@ package com.example.deliverysya.presentation.login_mvi
 
 import com.example.deliverysya.data.DataRepository
 import com.example.deliverysya.presentation.login_mvi.LoginResult.*
-import com.example.deliverysya.presentation.login_mvi.LoginResult.GetSingWhitEmailAndPasswordResult.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -17,25 +16,24 @@ internal class LoginProcessor @Inject constructor(private val dataRepository: Da
 
     fun actionProcessor(actions: LoginAction): Flow<LoginResult> =
         when (actions) {
-            is LoginAction.GetSingWhitEmailAndPassword -> SingWhitEmailAndPassword(actions.user,actions.Password)
+            is LoginAction.GetSingWhitEmailAndPasswordAction -> singWhitEmailAndPasswordProcessor(actions.user,actions.Password)
         }
 
-    private fun SingWhitEmailAndPassword(user: String, pass: String): Flow<LoginResult> =
+    private fun singWhitEmailAndPasswordProcessor(user: String, pass: String): Flow<GetSingWhitEmailAndPasswordResult> =
         dataRepository.logearWhitEmailAndPass(user,pass)
             .map { remoteLogin ->
-                if(user.isEmpty() && pass.isEmpty()) {
-                    EmptyValues(EMPTY_VALUE)
-                }else if (remoteLogin.user != user && remoteLogin.password != pass) {
-                    IncorrectCredentials(INCORRECT_CREDENTIALS)
-                }else {
-                    Success(remoteLogin)
-                }
+                println("Resultado $remoteLogin")
+                if(remoteLogin?.user != null){
+                    LoginResult.GetSingWhitEmailAndPasswordResult.Success(true)
+                }else{
+                    GetSingWhitEmailAndPasswordResult.Error(INCORRECT_CREDENTIALS)}
             }
             .onStart {
-                emit(InProgress)
+                emit(GetSingWhitEmailAndPasswordResult.InProgress)
             }
             .catch {
-                emit(GetSingWhitEmailAndPasswordResult.Error(ERROR_CONNECTION))
+               println("ACA ERROR FIREBASE"+it.message)
+                emit(GetSingWhitEmailAndPasswordResult.Error(it.message?: ERROR_CONNECTION))
             }
             .flowOn(Dispatchers.IO)
 

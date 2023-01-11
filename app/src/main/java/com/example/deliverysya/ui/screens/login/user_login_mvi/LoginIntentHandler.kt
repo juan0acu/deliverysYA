@@ -13,7 +13,7 @@ class LoginIntentHandler {
 
     internal fun userIntents(): Flow<LoginUIntent> = userIntents.asSharedFlow()
 
-    fun getSingWhitEmailAndPassword(user: String, pass: String) {
+    fun pressIngBtnGetIntoIntent(user: String, pass: String) {
         coroutineScope?.launch {
             userIntents.emit(LoginUIntent.PressingBtnGetInto(user,pass))
         }
