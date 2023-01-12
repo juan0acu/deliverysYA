@@ -22,7 +22,7 @@ internal class LoginReducer @Inject constructor() {
         is LoginResult.GetSingWhitEmailAndPasswordResult.Error -> ErrorUiState(result.error)
         is LoginResult.GetSingWhitEmailAndPasswordResult.EmptyValues -> ErrorUiState(result.emptyvalue)
         is LoginResult.GetSingWhitEmailAndPasswordResult.IncorrectCredentials-> ErrorUiState(result.message)
-       // else -> throw unsupportedReduceCase()
+       else -> throw unsupportedReduceCase()
     }
 
     private infix fun DefaultUiState.reduceWith(result: LoginResult) = when (result) {

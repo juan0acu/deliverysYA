@@ -84,11 +84,11 @@ private fun LoginContent(
     navController: NavController) {
     when (val value = uiState.value) {
         is ErrorUiState -> {
-            Body(navController,intentHandler)
             val showDialogg = remember{ mutableStateOf(true) }
             AlertMessage(title = "Error", message = value.error,showDialogg) {
                 showDialogg.value = false
             }
+            Body(navController,intentHandler)
         }
         is DefaultUiState -> {
             Body(navController,intentHandler)

@@ -2,9 +2,6 @@ package com.example.deliverysya.presentation.login_mvi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.deliverysya.data.DataRepository
-import com.example.deliverysya.data.network.AuthenticationService
-import com.example.deliverysya.data.network.FirebaseClient
 import com.example.deliverysya.presentation.login_mvi.LoginAction.*
 import com.example.deliverysya.presentation.login_mvi.LoginUIntent.*
 import dagger.hilt.android.lifecycle.HiltViewModel
