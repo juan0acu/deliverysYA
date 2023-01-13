@@ -281,7 +281,7 @@ fun RegisterAccount(navController: NavController) {
     ClickableText(
         text = buildAnnotatedString {
             append(stringResource(id = R.string.no_cuenta))
-
+            append("   ")
             withStyle(
                 style = SpanStyle(
                     color = DeliveryColor,
