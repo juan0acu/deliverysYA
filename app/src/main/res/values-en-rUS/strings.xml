@@ -4,4 +4,18 @@
     <string name="logo_name">Logo</string>
     <string name="title">Title</string>
     <string name="welcome_login">Welcome Login</string>
+    <string name="text_empty">Text Empty</string>
+    <string name="text_ok">Aceptar</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+    <string name="slogan">Get into Account</string>
+    <string name="ingresar_login">Get into</string>
+    <string name="ingresar_pass">Enter your password</string>
+    <string name="ingresar_email">Enter your email</string>
+    <string name="olvidaste_pass">Forgot Password?</string>
+    <string name="no_cuenta">Do not have an Account?</string>
+    <string name="registrar_cuenta">Sign up</string>
+    <string name="alternar_icon">Toggle Password Icon</string>
+    <string name="login_success">Email login successful</string>
+    <string name="login_error">Email login error or wrong password</string>
+    <string name="text_email_empyy">Empty mail field</string>
 </resources>

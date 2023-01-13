@@ -1,16 +1,17 @@
-package com.example.deliverysya.presentation.navigation
+package com.example.deliverysya.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.deliverysya.ui.screens.LoginScreen
 import com.example.deliverysya.ui.screens.SplashScreen
+import com.example.deliverysya.ui.screens.login.LoginScreens
+import com.example.deliverysya.MainActivity
+import com.example.deliverysya.ui.screens.introduction_riders.IntroductionRiders
 
 
 @Composable
-fun DeliverysYaNavigation() {
-
+fun DeliverysYaNavigation(activity: MainActivity) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -21,7 +22,10 @@ fun DeliverysYaNavigation() {
             SplashScreen(navController = navController)
         }
         composable(AppScreen.LoginScreen.route) {
-            LoginScreen(navController)
+            LoginScreens(navController = navController,activity)
+        }
+        composable(AppScreen.IntroductionRiders.route){
+            IntroductionRiders(navController = navController)
         }
     }
 }

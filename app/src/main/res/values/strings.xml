@@ -1,7 +1,21 @@
 <resources>
     <string name="app_name">DeliverysYa</string>
     <string name="logo_name">Logotype</string>
+    <string name="text_empty">Text Empty</string>
+    <string name="text_ok">Aceptar</string>
     <string name="title">Titular</string>
-    <string name="welcome_login">Bienvenido Login</string>
+    <string name="welcome_login">Bienvenido</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+    <string name="slogan">Ingresa a tu cuenta</string>
+    <string name="ingresar_login">Ingresar</string>
+    <string name="ingresar_email">Ingrese su correo</string>
+    <string name="ingresar_pass">Ingresar su contraseña</string>
+    <string name="olvidaste_pass">¿Olvidaste tu contraseña?</string>
+    <string name="no_cuenta">¿No tiene una cuenta? </string>
+    <string name="registrar_cuenta">Registrate Aquí</string>
+    <string name="alternar_icon">Toggle Password Icon</string>
+    <string name="login_success">Inicio de sesión con correo electrónico exitoso</string>
+    <string name="login_error">Error en el inicio de sesión correo o clave errónea</string>
+
 
 </resources>

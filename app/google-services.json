@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "237565859554",
+    "project_id": "deliverysya-b4c50",
+    "storage_bucket": "deliverysya-b4c50.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:237565859554:android:c7d9483192992ac14ef0bb",
+        "android_client_info": {
+          "package_name": "com.example.deliverysya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "237565859554-sgqu735pcm2d06sa1tbo3olm0upg357k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_xsq2mFrOOzXMv3tWTILrS9gMhDD0DB0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "237565859554-sgqu735pcm2d06sa1tbo3olm0upg357k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
