@@ -7,6 +7,7 @@ import com.example.deliverysya.presentation.login_mvi.LoginUiState.ErrorUiState
 import javax.inject.Inject
 
 internal class LoginReducer @Inject constructor() {
+
     infix fun LoginUiState.reduceWith(result: LoginResult): LoginUiState{
         return when(val previousState = this){
             is DefaultUiState -> previousState reduceWith result
@@ -22,7 +23,6 @@ internal class LoginReducer @Inject constructor() {
         is LoginResult.GetSingWhitEmailAndPasswordResult.Error -> ErrorUiState(result.error)
         is LoginResult.GetSingWhitEmailAndPasswordResult.EmptyValues -> ErrorUiState(result.emptyvalue)
         is LoginResult.GetSingWhitEmailAndPasswordResult.IncorrectCredentials-> ErrorUiState(result.message)
-       else -> throw unsupportedReduceCase()
     }
 
     private infix fun DefaultUiState.reduceWith(result: LoginResult) = when (result) {
