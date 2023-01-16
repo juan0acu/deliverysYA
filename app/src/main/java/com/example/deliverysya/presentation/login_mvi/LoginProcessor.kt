@@ -1,7 +1,7 @@
 package com.example.deliverysya.presentation.login_mvi
 
 import androidx.core.util.PatternsCompat
-import com.example.deliverysya.data.DataRepository
+import com.example.deliverysya.data.LoginRepository
 import com.example.deliverysya.presentation.login_mvi.LoginResult.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -14,15 +14,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-internal class LoginProcessor @Inject constructor(private val dataRepository: DataRepository) {
+internal class LoginProcessor @Inject constructor(private val loginRepository: LoginRepository,private val dispatchers: Dispatchers) {
 
-    fun actionProcessor(actions: LoginAction): Flow<LoginResult> =
-        when (actions) {
-            is LoginAction.GetSingWhitEmailAndPasswordAction -> singWhitEmailAndPasswordProcessor(
-                actions.user,
-                actions.Password
-            )
-        }
+    fun actionProcessor(actions: LoginAction): Flow<LoginResult> = when (actions) {
+        is LoginAction.GetSingWhitEmailAndPasswordAction -> singWhitEmailAndPasswordProcessor(
+            actions.user, actions.Password
+        )
+    }
 
     private fun singWhitEmailAndPasswordProcessor(user: String, pass: String) =
         flow<GetSingWhitEmailAndPasswordResult> {
@@ -30,9 +28,8 @@ internal class LoginProcessor @Inject constructor(private val dataRepository: Da
                 emit(GetSingWhitEmailAndPasswordResult.EmptyValues(EMPTY_VALUE))
             } else if (!PatternsCompat.EMAIL_ADDRESS.matcher(user).matches()) {
                 emit(GetSingWhitEmailAndPasswordResult.Error(ERROR_FORMAT_EMAIL))
-            }
-            else {
-                val remoteLogin = dataRepository.logearWhitEmailAndPass(user, pass).first()
+            } else {
+                val remoteLogin = loginRepository.logearWhitEmailAndPass(user, pass).first()
                 println("Resultado $remoteLogin")
                 if (remoteLogin?.user != null) {
                     emit(GetSingWhitEmailAndPasswordResult.Success(true))
@@ -45,13 +42,16 @@ internal class LoginProcessor @Inject constructor(private val dataRepository: Da
         }.catch {
             println("ACA ERROR FIREBASE" + it.message)
             emit(GetSingWhitEmailAndPasswordResult.Error(it.message ?: ERROR_CONNECTION))
-        }.flowOn(Dispatchers.IO)
+        }.flowOn(dispatchers.IO)
 
     companion object {
-        const val INCORRECT_CREDENTIALS = "Las credenciales son Incorrectas"
-        const val EMPTY_VALUE = "Existen campos vaciós, debes tener los campos Email y Pass llenos para poder ingresar"
-        const val ERROR_CONNECTION = "Error: no ha sido posible conectarse, no es computable"
-        const val ERROR_FORMAT_EMAIL = "Error: El correo ingresado no tiene el formado correcto"
+        private const val INCORRECT_CREDENTIALS = "Las credenciales son Incorrectas"
+        private const val EMPTY_VALUE =
+            "Existen campos vaciós, debes tener los campos Email y Pass llenos para poder ingresar"
+        private const val ERROR_CONNECTION =
+            "Error: no ha sido posible conectarse, no es computable"
+        private const val ERROR_FORMAT_EMAIL =
+            "Error: El correo ingresado no tiene el formado correcto"
     }
 }
 

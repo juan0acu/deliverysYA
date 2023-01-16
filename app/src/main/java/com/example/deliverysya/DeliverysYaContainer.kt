@@ -1,3 +1,6 @@
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+
 /*
 package com.example.deliverysya
 
@@ -20,3 +23,7 @@ class DeliverysYaContainer {
 
 
 }*/
+@HiltAndroidApp
+class DeliverysYaApplication: Application() {
+
+}
