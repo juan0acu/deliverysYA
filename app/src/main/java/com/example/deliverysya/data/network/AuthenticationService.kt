@@ -9,6 +9,9 @@ class AuthenticationService @Inject constructor(private val firebase: FirebaseCl
 
     suspend fun loginWhitEmailAndPass(email: String, password: String): AuthResult? {
         return firebase.auth.signInWithEmailAndPassword(email, password).await()
+    }
 
+    suspend fun createAccount(email: String, password: String): AuthResult? {
+        return firebase.auth.createUserWithEmailAndPassword(email, password).await()
     }
 }
