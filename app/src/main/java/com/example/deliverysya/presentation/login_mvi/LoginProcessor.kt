@@ -14,7 +14,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-internal class LoginProcessor @Inject constructor(private val loginRepository: LoginRepository,private val dispatchers: Dispatchers) {
+internal class LoginProcessor @Inject constructor(private val loginRepository: LoginRepository) {
 
     fun actionProcessor(actions: LoginAction): Flow<LoginResult> = when (actions) {
         is LoginAction.GetSingWhitEmailAndPasswordAction -> singWhitEmailAndPasswordProcessor(
@@ -42,7 +42,7 @@ internal class LoginProcessor @Inject constructor(private val loginRepository: L
         }.catch {
             println("ACA ERROR FIREBASE" + it.message)
             emit(GetSingWhitEmailAndPasswordResult.Error(it.message ?: ERROR_CONNECTION))
-        }.flowOn(dispatchers.IO)
+        }.flowOn(Dispatchers.IO)
 
     companion object {
         private const val INCORRECT_CREDENTIALS = "Las credenciales son Incorrectas"

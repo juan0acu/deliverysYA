@@ -23,7 +23,3 @@ class DeliverysYaContainer {
 
 
 }*/
-@HiltAndroidApp
-class DeliverysYaApplication: Application() {
-
-}
