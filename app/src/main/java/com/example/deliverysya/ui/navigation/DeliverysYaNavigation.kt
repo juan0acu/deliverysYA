@@ -9,16 +9,20 @@ import com.example.deliverysya.ui.screens.SplashScreen
 import com.example.deliverysya.ui.screens.login.LoginScreens
 import com.example.deliverysya.MainActivity
 import com.example.deliverysya.presentation.login_mvi.LoginViewModelMvi
+import com.example.deliverysya.presentation.register_user_mvi.RegisterUserViewModelMvi
 import com.example.deliverysya.ui.navigation.AppScreen.*
 import com.example.deliverysya.ui.screens.introduction_riders.IntroductionRiders
 import com.example.deliverysya.ui.screens.login.user_login_mvi.LoginScreensMvi
 import com.example.deliverysya.ui.screens.user_register.UserRegister
+import com.example.deliverysya.ui.screens.user_register.register_user_mvi.RegisterUserMvi
 
 
 @Composable
 internal fun DeliverysYaNavigation(activity: MainActivity) {
     val navController = rememberNavController()
     val loginViewModelMvi: LoginViewModelMvi = viewModel()
+    val registerUserViewModelMvi : RegisterUserViewModelMvi = viewModel()
+
     NavHost(
         navController = navController,
         startDestination = SplashScreen.route
@@ -38,6 +42,9 @@ internal fun DeliverysYaNavigation(activity: MainActivity) {
         }
         composable(UserRegister.route){
             UserRegister(navController = navController,activity)
+        }
+        composable(RegisterUserMvi.route){
+        RegisterUserMvi(registerUserViewModelMvi,navController = navController)
         }
     }
 }

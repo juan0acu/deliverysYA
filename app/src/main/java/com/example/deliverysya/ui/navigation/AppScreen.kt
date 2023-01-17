@@ -6,5 +6,6 @@ sealed class AppScreen (val route: String){
     object LoginScreenMvi: AppScreen("login_screen_mvi")
     object IntroductionRiders: AppScreen("introduction_riders")
     object UserRegister: AppScreen("user_register")
+    object RegisterUserMvi: AppScreen("user_register_mvi")
 
 }

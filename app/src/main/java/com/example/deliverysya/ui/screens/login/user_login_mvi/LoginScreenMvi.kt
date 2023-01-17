@@ -292,7 +292,7 @@ fun RegisterAccount(navController: NavController) {
             }
         }
     ) {
-        navController.navigate(AppScreen.UserRegister.route)
+        navController.navigate(AppScreen.RegisterUserMvi.route)
         // TODO("TO REGISTER SCREEN")
     }
 }

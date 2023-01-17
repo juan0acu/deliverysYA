@@ -22,7 +22,7 @@ internal class RegisterUserViewModelMvi @Inject constructor(
 ):ViewModel()
 {
     fun uiState(): StateFlow<RegisterUserUiState> = uiState
-    private val registerDefaulUiState: RegisterUserUiState = RegisterUserUiState.DefaultUiState
+    val registerDefaulUiState: RegisterUserUiState = RegisterUserUiState.DefaultUiState
     private val uiState: MutableStateFlow<RegisterUserUiState> = MutableStateFlow(registerDefaulUiState)
 
     fun processUserIntentsAndObserveUiStates(
