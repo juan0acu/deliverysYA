@@ -1,10 +1,13 @@
 package com.example.deliverysya.presentation.register_user_mvi
 
+import android.content.ContentValues
+import android.util.Log
 import androidx.core.util.PatternsCompat
 import com.example.deliverysya.data.RegisterUserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onStart
@@ -32,6 +35,13 @@ internal class RegisterUserProcesor @Inject constructor(private val registerUser
             }else if (pass != pass2){
                 emit(RegisterUserResult.RegisterWhitEmailAndPassResult.Error(
                     ERROR_CREDENTIAL_UNEQUAL))
+            }else {
+                val remoteRegister = registerUserRepository.registerUserWhitEmailAndPass(email,pass).first()
+                if (remoteRegister?.user != null) {
+                    emit(RegisterUserResult.RegisterWhitEmailAndPassResult.Success(true))
+                } else {
+                    emit(RegisterUserResult.RegisterWhitEmailAndPassResult.Error(ERROR_CONNECTION))
+                }
             }
         }.onStart {
             emit(RegisterUserResult.RegisterWhitEmailAndPassResult.InProgress)
