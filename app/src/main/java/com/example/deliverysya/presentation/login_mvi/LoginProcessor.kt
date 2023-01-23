@@ -4,6 +4,7 @@ import androidx.core.util.PatternsCompat
 import com.example.deliverysya.data.LoginRepository
 import com.example.deliverysya.presentation.login_mvi.LoginResult.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
@@ -18,13 +19,14 @@ internal class LoginProcessor @Inject constructor(private val loginRepository: L
 
     fun actionProcessor(actions: LoginAction): Flow<LoginResult> = when (actions) {
         is LoginAction.GetSingWhitEmailAndPasswordAction -> singWhitEmailAndPasswordProcessor(
-            actions.user, actions.Password
+            actions?.user, actions.Password
         )
     }
 
     private fun singWhitEmailAndPasswordProcessor(user: String, pass: String) =
         flow<GetSingWhitEmailAndPasswordResult> {
             if (user.isEmpty() && pass.isEmpty()) {
+                //delay(2000)
                 emit(GetSingWhitEmailAndPasswordResult.EmptyValues(EMPTY_VALUE))
             } else if (!PatternsCompat.EMAIL_ADDRESS.matcher(user).matches()) {
                 emit(GetSingWhitEmailAndPasswordResult.Error(ERROR_FORMAT_EMAIL))
@@ -34,14 +36,14 @@ internal class LoginProcessor @Inject constructor(private val loginRepository: L
                 if (remoteLogin?.user != null) {
                     emit(GetSingWhitEmailAndPasswordResult.Success(true))
                 } else {
-                    emit(GetSingWhitEmailAndPasswordResult.Error(INCORRECT_CREDENTIALS))
+                    emit(GetSingWhitEmailAndPasswordResult.IncorrectCredentials(INCORRECT_CREDENTIALS))
                 }
             }
         }.onStart {
             emit(GetSingWhitEmailAndPasswordResult.InProgress)
         }.catch {
-            println("ACA ERROR FIREBASE" + it.message)
-            emit(GetSingWhitEmailAndPasswordResult.Error(it.message ?: ERROR_CONNECTION))
+            println("ACA ERROR FIREBASE " + it.message)
+            emit(GetSingWhitEmailAndPasswordResult.IncorrectCredentials(it.message ?: ERROR_CONNECTION))
         }.flowOn(Dispatchers.IO)
 
     companion object {

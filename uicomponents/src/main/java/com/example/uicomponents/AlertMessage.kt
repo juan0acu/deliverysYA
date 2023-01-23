@@ -27,7 +27,7 @@ fun AlertMessage(
                 Text(text = message)
             },
             confirmButton = {
-                Button(onClick = { onClose ()}) {
+                Button(onClick = { onClose()}) {
                     Text(text = stringResource(id = R.string.text_ok))
                 }
             }

@@ -12,25 +12,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -49,53 +36,46 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.deliverysya.R
+import com.example.deliverysya.presentation.login_mvi.LoginUiEffect
 import com.example.deliverysya.presentation.login_mvi.LoginUiState
 import com.example.deliverysya.presentation.login_mvi.LoginUiState.*
 import com.example.deliverysya.presentation.login_mvi.LoginViewModelMvi
 import com.example.deliverysya.ui.navigation.AppScreen
-import com.example.uicomponents.AlertMessage
-import com.example.uicomponents.BodyText
-import com.example.uicomponents.RoundedButton
-import com.example.uicomponents.TitleText
-import com.example.uicomponents.TransparentTextField
+import com.example.uicomponents.*
 import com.example.uicomponents.model.TransparentTextFieldAttrs
 import com.example.uicomponents.theme.DeliveryColor
 import com.example.uicomponents.theme.DeliverysYaTheme
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.SharedFlow
 
+@FlowPreview
 @Composable
 internal fun LoginScreensMvi(
-   loginViewModelMvi: LoginViewModelMvi,navController: NavController
+    loginViewModelMvi: LoginViewModelMvi, navController: NavController
 ) {
+    val uiEffect = remember { loginViewModelMvi.uiEffect() }
     val loginIntentHandler = LoginIntentHandler().apply {
         coroutineScope = rememberCoroutineScope()
     }
     loginViewModelMvi.processUserIntentsAndObserveUiStates(loginIntentHandler.userIntents())
     val uiState =
         remember { loginViewModelMvi.uiState() }.collectAsState(initial = loginViewModelMvi.loginDefaultUiState)
-    LoginContent(loginIntentHandler, uiState,navController)
+    LoginContent(loginIntentHandler, uiState, navController, uiEffect)
 }
 
 @Composable
 private fun LoginContent(
     intentHandler: LoginIntentHandler,
     uiState: State<LoginUiState>,
-    navController: NavController) {
+    navController: NavController,
+    uiEffect: SharedFlow<LoginUiEffect>
+) {
     when (val value = uiState.value) {
-        is ErrorUiState -> {
-            val showDialogg = remember{ mutableStateOf(true) }
-            AlertMessage(title = "Error", message = value.error,showDialogg) {
-                showDialogg.value = false
-            }
-            Body(navController,intentHandler)
-        }
         is DefaultUiState -> {
-            Body(navController,intentHandler)
-        }
-        is LoadingUiState -> {
-            println("Paso por el estado LoadingUIState")
-            LoadingComponent()
+            Body(navController, intentHandler, uiEffect)
         }
         is SuccessUiState -> {
             navController.popBackStack()
@@ -105,9 +85,27 @@ private fun LoginContent(
 }
 
 @Composable
-fun Body(navController: NavController, loginIntentHandler: LoginIntentHandler) {
+internal fun Body(
+    navController: NavController,
+    loginIntentHandler: LoginIntentHandler,
+    uiEffect: SharedFlow<LoginUiEffect>
+) {
     val emailValue = rememberSaveable { mutableStateOf("") }
     val passwordValue = rememberSaveable { mutableStateOf("") }
+    val showDialog = remember { mutableStateOf(false) }
+    val showLoadingDialog = remember { mutableStateOf(false) }
+    val messageError = remember { mutableStateOf("") }
+
+    UiEffectSection(
+        uiEffect = uiEffect,
+        onDialog = {
+            messageError.value = it
+        },
+        showDialog,
+        showLoadingDialog
+    )
+    ShowDialogg(showDialogg = showDialog, meesage = messageError.value)
+    ShowLoadingDialog(openDialog = showLoadingDialog)
 
     DeliverysYaTheme {
         Box(
@@ -149,7 +147,7 @@ fun Body(navController: NavController, loginIntentHandler: LoginIntentHandler) {
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
 
-                            FormEmailAndPass(emailValue,passwordValue)
+                            FormEmailAndPass(emailValue, passwordValue)
 
                             RecoverPassword()
                         }
@@ -160,7 +158,7 @@ fun Body(navController: NavController, loginIntentHandler: LoginIntentHandler) {
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
 
-                            EnterAccount(loginIntentHandler,emailValue.value,passwordValue.value)
+                            EnterAccount(loginIntentHandler, emailValue.value, passwordValue.value)
 
                             RegisterAccount(navController)
                         }
@@ -169,6 +167,53 @@ fun Body(navController: NavController, loginIntentHandler: LoginIntentHandler) {
 
             }
         }
+    }
+
+}
+
+@Composable
+internal fun UiEffectSection(
+    uiEffect: SharedFlow<LoginUiEffect>,
+    onDialog: (String) -> Unit,
+    showDialog: MutableState<Boolean>,
+    showLoadingDialog: MutableState<Boolean>
+) {
+
+    LaunchedEffect(uiEffect) {
+        uiEffect.collect { loginUiEffect ->
+            when (loginUiEffect) {
+                is LoginUiEffect.ErrorUiEffect -> {
+                    println("Paso por el Launched con el error: ${loginUiEffect.error}")
+                    showDialog.value = true
+                    showLoadingDialog.value = false
+                    onDialog.invoke(loginUiEffect.error)
+                }
+                LoginUiEffect.LoadingUiEffect -> showLoadingDialog.value = true
+            }
+        }
+    }
+}
+
+@Composable
+fun ShowLoadingDialog(openDialog: MutableState<Boolean>) {
+    if (openDialog.value) {
+        Dialog(onDismissRequest = { openDialog.value = false }) {
+            Box(
+                Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+    }
+}
+
+@Composable
+fun ShowDialogg(showDialogg: MutableState<Boolean>, meesage: String) {
+    AlertMessage(title = "Error", message = meesage, showDialogg) {
+        showDialogg.value = false
+        // Body(navController,intentHandler)
     }
 }
 
@@ -194,7 +239,7 @@ fun TitlePrincipal() {
 }
 
 @Composable
-fun FormEmailAndPass(emailValue: MutableState<String>,passwordValue:MutableState<String>,) {
+fun FormEmailAndPass(emailValue: MutableState<String>, passwordValue: MutableState<String>) {
 
     var passwordVisibility by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
@@ -262,15 +307,18 @@ fun RecoverPassword() {
 }
 
 @Composable
-fun EnterAccount(loginIntentHandler: LoginIntentHandler,emailValue:String,passwordValue:String) {
-
+fun EnterAccount(
+    loginIntentHandler: LoginIntentHandler,
+    emailValue: String,
+    passwordValue: String
+) {
     RoundedButton(
         text = stringResource(id = R.string.ingresar_login),
         // validate = false,
         onClick = {
             println("email $emailValue")
             println("pass $passwordValue")
-            loginIntentHandler.pressIngBtnGetIntoIntent(emailValue,passwordValue)
+            loginIntentHandler.pressIngBtnGetIntoIntent(emailValue, passwordValue)
         }
     )
 }
@@ -294,16 +342,5 @@ fun RegisterAccount(navController: NavController) {
     ) {
         navController.navigate(AppScreen.RegisterUserMvi.route)
         // TODO("TO REGISTER SCREEN")
-    }
-}
-
-@Composable
-fun LoadingComponent() {
-    Box(
-        Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
     }
 }

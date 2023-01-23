@@ -19,4 +19,10 @@ class LoginIntentHandler {
         }
     }
 
+   /* fun retryIntent() {
+        coroutineScope?.launch {
+            userIntents.emit(LoginUIntent.RetryUIntent)
+        }
+    }*/
+
 }
