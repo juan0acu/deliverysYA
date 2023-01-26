@@ -26,9 +26,6 @@ internal class LoginReducer @Inject constructor() {
        throw unsupportedReduceCase()
     }
 
-
-
-
     private fun unsupportedReduceCase() = RuntimeException()
 
 }

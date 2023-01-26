@@ -46,7 +46,6 @@ internal class LoginViewModelMvi @Inject constructor(
     private fun LoginUIntent.toAction(): LoginAction {
         return when (this) {
             is PressingBtnGetInto -> GetSingWhitEmailAndPasswordAction(this.user, this.password)
-           // is RetryUIntent -> GetSingWhitEmailAndPasswordAction(null,null)
         }
     }
 

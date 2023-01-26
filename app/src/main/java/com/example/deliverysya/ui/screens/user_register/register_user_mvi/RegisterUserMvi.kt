@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -51,8 +52,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.deliverysya.R
+import com.example.deliverysya.presentation.register_user_mvi.RegisterUiEffect
 import com.example.deliverysya.presentation.register_user_mvi.RegisterUserUiState
 import com.example.deliverysya.presentation.register_user_mvi.RegisterUserViewModelMvi
 import com.example.deliverysya.ui.navigation.AppScreen
@@ -64,6 +67,7 @@ import com.example.uicomponents.TitleText
 import com.example.uicomponents.TransparentTextField
 import com.example.uicomponents.model.TransparentTextFieldAttrs
 import com.example.uicomponents.theme.DeliverysYaTheme
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
 
@@ -71,6 +75,9 @@ import kotlinx.coroutines.launch
 internal fun RegisterUserMvi(
     registerUserViewModelMVI: RegisterUserViewModelMvi, navController: NavController
 ) {
+    val uiEffect = remember {
+        registerUserViewModelMVI.uiEffect()
+    }
     val registerUserIntentHandler = RegisterUserIntentHandler().apply {
         coroutineScope = rememberCoroutineScope()
     }
@@ -80,28 +87,19 @@ internal fun RegisterUserMvi(
             registerUserViewModelMVI.uiState()
         }.collectAsState(initial = registerUserViewModelMVI.registerDefaulUiState)
 
-    RegisterUserContent(registerUserIntentHandler, uiState, navController)
+    RegisterUserContent(registerUserIntentHandler, uiState, navController,uiEffect)
 }
 
 @Composable
 private fun RegisterUserContent(
     intentHandler: RegisterUserIntentHandler,
     uiState: State<RegisterUserUiState>,
-    navController: NavController) {
+    navController: NavController,
+    uiEffect: SharedFlow<RegisterUiEffect>
+) {
     when (val value = uiState.value) {
-        is RegisterUserUiState.ErrorUiState -> {
-            val showDialogg = remember{ mutableStateOf(true) }
-            AlertMessage(title = "Error", message = value.error,showDialogg) {
-                showDialogg.value = false
-            }
-            BodyRegisterUser(navController,intentHandler)
-        }
         is RegisterUserUiState.DefaultUiState -> {
-            BodyRegisterUser(navController,intentHandler)
-        }
-        is RegisterUserUiState.LoadingUiState -> {
-            println("Paso por el estado LoadingUIState")
-            LoadingComponent()
+            BodyRegisterUser(navController, intentHandler, uiEffect)
         }
         is RegisterUserUiState.SuccessUiState -> {
             navController.popBackStack()
@@ -113,9 +111,10 @@ private fun RegisterUserContent(
 @OptIn(ExperimentalFoundationApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun BodyRegisterUser(
+internal fun BodyRegisterUser(
     navController: NavController,
-    registerUserIntentHandler: RegisterUserIntentHandler
+    registerUserIntentHandler: RegisterUserIntentHandler,
+    uiEffect: SharedFlow<RegisterUiEffect>
 ) {
     val emailValue = rememberSaveable { mutableStateOf("") }
     val nameValue = rememberSaveable { mutableStateOf("") }
@@ -124,6 +123,20 @@ fun BodyRegisterUser(
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val coroutineScope = rememberCoroutineScope()
 
+    val showDialog = remember { mutableStateOf(false) }
+    val showLoadingDialog = remember { mutableStateOf(false) }
+    val messageError = remember { mutableStateOf("") }
+
+    UiEffectSection(
+        uiEffect = uiEffect,
+        onDialog = {
+            messageError.value = it
+        },
+        showDialog,
+        showLoadingDialog
+    )
+    ShowDialogg(showDialogg = showDialog, meesage = messageError.value)
+    ShowLoadingDialog(openDialog = showLoadingDialog)
 
     DeliverysYaTheme {
         Scaffold(topBar = {
@@ -347,12 +360,47 @@ fun BtnRegisterUser(
 }
 
 @Composable
-fun LoadingComponent() {
-    Box(
-        Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
+internal fun UiEffectSection(
+    uiEffect: SharedFlow<RegisterUiEffect>,
+    onDialog: (String) -> Unit,
+    showDialog: MutableState<Boolean>,
+    showLoadingDialog: MutableState<Boolean>
+) {
+    LaunchedEffect(uiEffect) {
+        uiEffect.collect { registerUiEffect ->
+            when (registerUiEffect) {
+                is RegisterUiEffect.ErrorUiEffect -> {
+                    println("Paso por el Launched con el error: ${registerUiEffect.error}")
+                    showDialog.value = true
+                    showLoadingDialog.value = false
+                    onDialog.invoke(registerUiEffect.error)
+                }
+                RegisterUiEffect.LoadingUiEffect -> showLoadingDialog.value = true
+            }
+        }
+    }
+
+}
+
+@Composable
+fun ShowLoadingDialog(openDialog: MutableState<Boolean>) {
+    if (openDialog.value) {
+        Dialog(onDismissRequest = { openDialog.value = false }) {
+            Box(
+                Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+    }
+}
+
+@Composable
+fun ShowDialogg(showDialogg: MutableState<Boolean>, meesage: String) {
+    AlertMessage(title = "Error", message = meesage, showDialogg) {
+        showDialogg.value = false
+        // Body(navController,intentHandler)
     }
 }
