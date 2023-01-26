@@ -29,7 +29,7 @@ Column() {
     LaunchedEffect(key1 = true) {
         delay(timeMillis)
         navController.popBackStack()
-        navController.navigate(AppScreen.LoginScreen.route)
+        navController.navigate(AppScreen.LoginScreenMvi.route)
     }
     SplashScreenInitialApp(
         modifier = modifier

@@ -1,6 +1,5 @@
 package com.example.deliverysya.ui.screens.login
 
-import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -60,6 +59,7 @@ import com.example.uicomponents.TitleText
 import com.example.uicomponents.TransparentTextField
 import com.example.uicomponents.model.TransparentTextFieldAttrs
 import com.example.uicomponents.theme.DeliveryColor
+import com.example.uicomponents.theme.DeliverysYaTheme
 
 
 @Composable
@@ -67,8 +67,8 @@ fun LoginScreens(
     navController: NavController,
     activity: MainActivity,
 ) {
-    val emailValue = rememberSaveable { mutableStateOf("") }
-    val passwordValue = rememberSaveable { mutableStateOf("") }
+    val emailValue1 = rememberSaveable { mutableStateOf("") }
+    val passwordValue1 = rememberSaveable { mutableStateOf("") }
     var passwordVisibility by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     val loginViewModel: LoginViewModel = viewModel()
@@ -81,138 +81,140 @@ fun LoginScreens(
         navController.navigate(AppScreen.IntroductionRiders.route)
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background)
-    ) {
-
-        LogoBannerSection()
-
+    DeliverysYaTheme {
         Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.BottomCenter
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background)
         ) {
 
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(400.dp),
-                color = Color.White,
-                shape = RoundedCornerShape(
-                    topStartPercent = 8,
-                    topEndPercent = 8
-                )
+            LogoBannerSection()
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.BottomCenter
             ) {
-                Column(
+
+                Surface(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.SpaceEvenly
+                        .height(400.dp),
+                    color = Color.White,
+                    shape = RoundedCornerShape(
+                        topStartPercent = 8,
+                        topEndPercent = 8
+                    )
                 ) {
-                    TitleText(
-                        title = stringResource(id = R.string.welcome_login)
-                    )
-
-                    BodyText(
-                        body = stringResource(id = R.string.slogan)
-                    )
-
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        TransparentTextField(
-                            TransparentTextFieldAttrs(
-                                textFieldValue = emailValue,
-                                textLabel = stringResource(id = R.string.ingresar_email),
-                                keyboardType = KeyboardType.Email,
-                                keyboardActions = KeyboardActions(
-                                    onNext = {
-                                        focusManager.moveFocus(FocusDirection.Down)
-                                    }
-                                ),
-                                imeAction = ImeAction.Next
-                            )
+                        TitleText(
+                            title = stringResource(id = R.string.welcome_login)
                         )
-                        TransparentTextField(
-                            TransparentTextFieldAttrs(
-                                textFieldValue = passwordValue,
-                                textLabel = stringResource(id = R.string.ingresar_pass),
-                                keyboardType = KeyboardType.Password,
-                                keyboardActions = KeyboardActions(
-                                    onDone = {
-                                        focusManager.clearFocus()
+
+                        BodyText(
+                            body = stringResource(id = R.string.slogan)
+                        )
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                           TransparentTextField(
+                                TransparentTextFieldAttrs(
+                                    textFieldValue = emailValue1,
+                                    textLabel = stringResource(id = R.string.ingresar_email),
+                                    keyboardType = KeyboardType.Email,
+                                    keyboardActions = KeyboardActions(
+                                        onNext = {
+                                            focusManager.moveFocus(FocusDirection.Down)
+                                        }
+                                    ),
+                                    imeAction = ImeAction.Next
+                                )
+                            )
+                            TransparentTextField(
+                                TransparentTextFieldAttrs(
+                                    textFieldValue = passwordValue1,
+                                    textLabel = stringResource(id = R.string.ingresar_pass),
+                                    keyboardType = KeyboardType.Password,
+                                    keyboardActions = KeyboardActions(
+                                        onDone = {
+                                            focusManager.clearFocus()
+                                            loginViewModel.loginEmailPass(
+                                                emailValue1.value,
+                                                passwordValue1.value,
+                                                activity
+                                            )
+
+                                        }
+                                    ),
+                                    imeAction = ImeAction.Done,
+                                    trailingIcon = {
+                                        IconButton(
+                                            onClick = {
+                                                passwordVisibility = !passwordVisibility
+                                            }
+                                        ) {
+                                            Icon(
+                                                imageVector = if (passwordVisibility) {
+                                                    Icons.Default.Visibility
+                                                } else {
+                                                    Icons.Default.VisibilityOff
+                                                },
+                                                contentDescription = stringResource(id = R.string.alternar_icon)
+                                            )
+                                        }
+                                    },
+                                    visualTransformation = if (passwordVisibility) {
+                                        VisualTransformation.None
+                                    } else {
+                                        PasswordVisualTransformation()
+                                    }
+                                )
+                            )
+
+                            Text(
+                                modifier = Modifier.fillMaxWidth(),
+                                text = stringResource(id = R.string.olvidaste_pass),
+                                style = MaterialTheme.typography.body1,
+                                textAlign = TextAlign.End
+                            )
+                        }
+
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+
+                            RoundedButton(
+                                text = stringResource(id = R.string.ingresar_login),
+                                // validate = false,
+                                onClick = {
+                                    loginViewModel.validateEmail(emailValue1.value, activity)
+                                    loginViewModel.validatePassword(passwordValue1.value, activity)
+                                    if (hasErrors) {
                                         loginViewModel.loginEmailPass(
-                                            emailValue.value,
-                                            passwordValue.value,
+                                            emailValue1.value,
+                                            passwordValue1.value,
                                             activity
                                         )
-
                                     }
-                                ),
-                                imeAction = ImeAction.Done,
-                                trailingIcon = {
-                                    IconButton(
-                                        onClick = {
-                                            passwordVisibility = !passwordVisibility
-                                        }
-                                    ) {
-                                        Icon(
-                                            imageVector = if (passwordVisibility) {
-                                                Icons.Default.Visibility
-                                            } else {
-                                                Icons.Default.VisibilityOff
-                                            },
-                                            contentDescription = stringResource(id = R.string.alternar_icon)
-                                        )
-                                    }
-                                },
-                                visualTransformation = if (passwordVisibility) {
-                                    VisualTransformation.None
-                                } else {
-                                    PasswordVisualTransformation()
                                 }
                             )
-                        )
-
-                        Text(
-                            modifier = Modifier.fillMaxWidth(),
-                            text = stringResource(id = R.string.olvidaste_pass),
-                            style = MaterialTheme.typography.body1,
-                            textAlign = TextAlign.End
-                        )
-                    }
-
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-
-                        RoundedButton(
-                            text = stringResource(id = R.string.ingresar_login),
-                            // validate = false,
-                            onClick = {
-                                loginViewModel.validateEmail(emailValue.value, activity)
-                                loginViewModel.validatePassword(passwordValue.value, activity)
-                                if (hasErrors) {
-                                    loginViewModel.loginEmailPass(
-                                        emailValue.value,
-                                        passwordValue.value,
-                                        activity
-                                    )
-                                }
-                            }
-                        )
-                        RegisterAccount()
+                            RegisterAccount(navController)
+                        }
                     }
                 }
-            }
 
+            }
         }
     }
 }
@@ -284,7 +286,7 @@ fun EnterForm(activity:Activity) {
 }*/
 
 @Composable
-fun RegisterAccount() {
+fun RegisterAccount(navController: NavController) {
 
     ClickableText(
         text = buildAnnotatedString {
@@ -300,6 +302,7 @@ fun RegisterAccount() {
             }
         }
     ) {
+        navController.navigate(AppScreen.UserRegister.route)
         // TODO("TO REGISTER SCREEN")
     }
 }

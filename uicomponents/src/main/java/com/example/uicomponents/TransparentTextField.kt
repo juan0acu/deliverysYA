@@ -9,6 +9,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -21,7 +22,7 @@ fun TransparentTextField(
     transparentTextFieldAttrs: TransparentTextFieldAttrs
 ) {
     TextField(
-        modifier =transparentTextFieldAttrs.modifier.fillMaxWidth(),
+        modifier =transparentTextFieldAttrs.modifier.fillMaxWidth() ,
         value = transparentTextFieldAttrs.textFieldValue.value.take(transparentTextFieldAttrs.maxChar ?: 40),
         onValueChange = {transparentTextFieldAttrs.textFieldValue.value = it },
         label = {
@@ -38,5 +39,6 @@ fun TransparentTextField(
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.Transparent
         )
+
     )
 }
